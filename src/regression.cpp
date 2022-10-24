@@ -73,12 +73,27 @@ Data read_database(std::string filepath)
         {
         for(size_t j{};j<4;j++)
         {
-            theta[j] +=theta[j] -lr*(carrier)*dataset[i][j];
+            theta[j] =theta[j] -lr*(carrier)*dataset[i][j];
             
             
         }
     
         }
         return theta ; 
+    }
+    std::vector <double> linear_regression( Data dataset ,std::vector<double> init_theta,double lr)
+    {
+        double cost1{regression::cost_function(dataset,init_theta)};
+        double cost2{};
+        for(size_t i{};i<1000;++i)
+        {
+        
+        init_theta = regression::update(dataset,init_theta,lr);
+        cost2=regression::cost_function(dataset,init_theta);
+         std::cout<<i+1<<"->"<<"cost:  "<<cost2;
+         std::cout<<"   -reduced cost: "<<cost2-cost1<<std::endl;
+         cost1=cost2;
+        }
+        return init_theta;
     }
 }

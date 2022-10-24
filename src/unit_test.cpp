@@ -1,8 +1,8 @@
-// #include <string>
-// #include "gtest/gtest.h"
-// //#include "gmock/gmock.h"
+ #include <string>
+ #include "gtest/gtest.h"
+//#include "gmock/gmock.h"
 // #include "book_inventory.h"
-// #include "regression.h"
+ #include "regression.h"
 
 
 
@@ -131,15 +131,15 @@
 //     EXPECT_NEAR(total_cost, 20.90, 0.001);
 // }
 
-// TEST(HW1Test, TEST12) {
-//     using namespace regression;
-//     Data dataset = read_database("fish.txt");
+TEST(HW1Test, TEST12) {
+    using namespace regression;
+    Data dataset = read_database("fish.txt");
 
-//     EXPECT_EQ(dataset.size(), 100);
-//     for(const auto& row : dataset)
-//         EXPECT_EQ(row.size(), 5);
+    EXPECT_EQ(dataset.size(), 100);
+    for(const auto& row : dataset)
+        EXPECT_EQ(row.size(), 5);
     
-// }
+}
 
 // TEST(HW1Test, TEST13) {
 //     using namespace regression;
