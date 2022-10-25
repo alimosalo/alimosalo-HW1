@@ -41,22 +41,27 @@ Data read_database(std::string filepath)
     {
 
         double a{};
-        for(size_t i{};i<4;i++)
+        size_t i{};
+        for(auto sub:x)
         {
-            a+=theta[i]*x[i];
+            a+=sub*theta[i];
+            i++;
         }
         return a ;
     }
     double cost_function( Data dataset, std::vector<double>theta)
+    
     {   
         double cost{};
         double carrier{};
         for(size_t i{};i<dataset.size() ;++i)
         {
             carrier =(regression::hypothesis(theta,dataset[i])-dataset[i][4]);
+            
             cost += std::pow(carrier,2);
             
         }
+    
         return (cost)*(0.5) ;
     }
     std::vector <double> update( Data dataset,  std::vector<double> theta,double lr)
@@ -90,8 +95,8 @@ Data read_database(std::string filepath)
         
         init_theta = regression::update(dataset,init_theta,lr);
         cost2=regression::cost_function(dataset,init_theta);
-         std::cout<<i+1<<"->"<<"cost:  "<<cost2;
-         std::cout<<"   -reduced cost: "<<cost2-cost1<<std::endl;
+         std::cout<<i+1<<"->"<<"cost:  "<<std::setprecision(5)<<cost2;
+         std::cout<<"   -reduced cost: "<<std::setprecision(5)<<cost1-cost2<<std::endl;
          cost1=cost2;
         }
         return init_theta;

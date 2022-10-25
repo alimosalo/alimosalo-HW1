@@ -6,20 +6,19 @@
 #include <cmath>
 #include "gtest/gtest.h"
 #include <iomanip>
-
-//#include "book_inventory.h"
-struct Book
-{
-    std::string title;
-    std::string author;
-    float cost ;
-    std::string isbn;
-    std::string language_code ;
-    int num_pages;
-    std::string publisher ;
-    int count ;
-};
-using Books=std::vector<Book>;
+#include "book_inventory.h"
+// struct Book
+// {
+//     std::string title;
+//     std::string author;
+//     float cost ;
+//     std::string isbn;
+//     std::string language_code ;
+//     int num_pages;
+//     std::string publisher ;
+//     int count ;
+// };
+// using Books=std::vector<Book>;
 
 
 namespace book{
@@ -97,12 +96,12 @@ namespace book{
             if(x.title==title)
                 return x.isbn ; 
         }
-        std::cout<<"none"<<std::endl;
+        
         return "none";
     }
     bool order(Books inventory, Books& shopinglist, std::string isbn)
     {
-        std::ofstream new_inventory{"/resources/inventory2.txt"};
+        
         
         if(isbn=="none"){return false;}
 
@@ -113,23 +112,10 @@ namespace book{
             if(x.isbn == isbn)
                 shopinglist.push_back(x) ;
                 shopinglist[counter].count --;
+                std::abort;
             counter++;
-        for(auto x:inventory)
-        {
-
-              new_inventory<<counter2<<',';
-              new_inventory<<x.title<<',';
-              new_inventory<<x.author<<',';
-              new_inventory<<x.cost<<',';
-              new_inventory<<x.isbn<<',';
-              new_inventory<<x.language_code<<',';
-              new_inventory<<x.num_pages<<',';
-              new_inventory<<x.publisher<<',';
-              new_inventory<<x.count<<'\n';
-              counter2++ ;
-        }
-        new_inventory<<"hi"<<std::endl;
-        new_inventory.close();
+        
+        
         return true; 
     
     }
@@ -151,8 +137,9 @@ namespace book{
                 std::cout<<'|'<<x.title<<std::setw(b)<<'|';
             }
             std::cout<<std::setw(6)<<x.isbn<<std::setw(7)<<'|'; 
-            std::cout<<std::setw(6)<<x.cost<<'$'<<std::setw(10)<<'|'<<std::endl; 
+            std::cout<<std::setw(6)<<x.cost<<'$'<<std::setw(8)<<'|'<<std::endl; 
         }
+        std::cout<<std::string(54,'*')<<std::endl;
         return 0 ; 
         
 
@@ -160,16 +147,7 @@ namespace book{
 
 
 }
-    int main(void)
-    {
-        Books inventory = book::read_database("inventory.txt");
-        Books shopinglist ; 
-        std::string isbn = book::search(inventory,"Harry Potter and the Half-Blood Prince");
-        bool a = book::order(inventory,shopinglist,isbn);
-        book::get_recipt(shopinglist) ;           
-        
 
-    }
 
 
 

@@ -1,34 +1,22 @@
 #include <iostream>
-#include <array>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include "regression.h"
+#include "book_inventory.h"
 #include "gtest/gtest.h"
 
 
 
 int main(void)
 {
-   // Data a {regression::read_database("fish.txt")};
-    // std::vector <double> theta{0,0,0,0};
-    //     for(size_t i{};i<10;i++)
-    //     {
-    //      std::cout<<theta[1]<<std::endl;
-    //      theta =regression::update(a,theta,1e-7);
-    //      std::cout<<theta[0]<<std::endl;
-
-    
-    //     }
-        
+ Books shoppinglist{};
+Books a=book::read_database("inventory.txt");
+std::string b=book::search(a,"Harry Potter and the Half-Blood Prince");
+bool t=book::order(a,shoppinglist,b);
+book::get_recipt(shoppinglist);
 
 
-
-
-
-    Data a {regression::read_database("fish.txt")};
-    std::vector<double> b{0,0,0,0};
-    std::vector <double>all=regression::linear_regression(a,b,1e-7);
-     std::cout<<all[0]<<std::endl;
-    
-
-} 
+int h {1234};
+std::cout<<std::size(h)<<std::endl;
+}

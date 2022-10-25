@@ -1,3 +1,5 @@
+#ifndef BOOK_INVENTORY_H
+#define BOOK_INVENTORY_H
 struct Book
 {
     std::string title;
@@ -10,4 +12,10 @@ struct Book
     int count ;
 };
 using Books=std::vector<Book>;
-Books read_database(std::string file_path);
+namespace book {
+    Books read_database(std::string );
+    std::string search(Books ,std::string );
+    bool order(Books , Books& , std::string );
+    double get_recipt(const Books& );
+}
+#endif
