@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <cmath>
+#include <stdexcept>
 #include "gtest/gtest.h"
 #include <iomanip>
 #include "book_inventory.h"
@@ -33,7 +33,7 @@ namespace book{
         std::ifstream iff{filepath};
 
         if(!iff)
-            std::cout<<"nothing is found here"<<std::endl;
+            throw std::runtime_error("runtime_error");
         else
         {
             std::stringstream s1;
@@ -99,7 +99,7 @@ namespace book{
         
         return "none";
     }
-    bool order(Books inventory, Books& shopinglist, std::string isbn)
+    bool order( Books& inventory, Books& shopinglist, std::string isbn)
     {
         
         
@@ -107,27 +107,35 @@ namespace book{
 
         
         int counter{0};
-        int counter2{0};
+        int counter2{};
         for(auto x:inventory)
+        {
+            
             if(x.isbn == isbn)
+                {
+                --inventory[counter].count;
+                --x.count;
                 shopinglist.push_back(x) ;
-                shopinglist[counter].count --;
                 std::abort;
+                
+                }
             counter++;
+            
         
-        
+        }
         return true; 
     
     }
     double get_recipt(const Books& shopinglist){
         std::cout<<std::string(54,'*')<<std::endl;
-        
+        int sum{};
+
         std::cout<<'|'<<std::setw(6)<<"title"<<std::setw(15)<<'|';        
         std::cout<<std::setw(6)<<"isbn"<<std::setw(10)<<'|'; 
         std::cout<<std::setw(6)<<"cost"<<std::setw(9)<<'|'<<std::endl;
+
         for(auto x:shopinglist) 
         {   int a{static_cast <int>(x.title.size())};
-
             int b{std::abs(21-a)};
 
             if(x.title.size()>17)
@@ -138,7 +146,10 @@ namespace book{
             }
             std::cout<<std::setw(6)<<x.isbn<<std::setw(7)<<'|'; 
             std::cout<<std::setw(6)<<x.cost<<'$'<<std::setw(8)<<'|'<<std::endl; 
+            sum+=x.cost;
+            
         }
+        std::cout<<"sum: "<<sum<<std::endl;
         std::cout<<std::string(54,'*')<<std::endl;
         return 0 ; 
         

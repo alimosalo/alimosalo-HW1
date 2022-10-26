@@ -15,7 +15,7 @@ using Books=std::vector<Book>;
 namespace book {
     Books read_database(std::string );
     std::string search(Books ,std::string );
-    bool order(Books , Books& , std::string );
+    bool order( Books& , Books& , std::string );
     double get_recipt(const Books& );
 }
 #endif

@@ -1,12 +1,15 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stdexcept>
 #include <cmath>
 #include <vector>
 #include <sstream>
 #include "regression.h"
-#include "gtest/gtest.h"
+
 using Data = std::vector <std::vector<double>>;
+
+
 namespace regression{
 Data read_database(std::string filepath)
 {
@@ -17,6 +20,9 @@ Data read_database(std::string filepath)
     std::string getter{};
     std::stringstream substitude;
     size_t i{0};
+    
+    if(!text) {throw std::runtime_error("this file can't be opened");}
+
     while(getline(text,variable))
     {
         sub_fish.push_back(std::vector <double>());
@@ -42,10 +48,14 @@ Data read_database(std::string filepath)
 
         double a{};
         size_t i{};
-        for(auto sub:x)
+        if(theta.size()>x.size())
+        {throw std::logic_error("logic error");}
+        for(auto sub:theta)
         {
-            a+=sub*theta[i];
+            a+=sub*x[i];
             i++;
+            if(i-1==x.size())
+            {break;}
         }
         return a ;
     }
@@ -86,17 +96,18 @@ Data read_database(std::string filepath)
         }
         return theta ; 
     }
+
     std::vector <double> linear_regression( Data dataset ,std::vector<double> init_theta,double lr)
     {
-        double cost1{regression::cost_function(dataset,init_theta)};
-        double cost2{};
         for(size_t i{};i<1000;++i)
         {
-        
+        static double cost1{regression::cost_function(dataset,init_theta)};
+        static double cost2{};
+
         init_theta = regression::update(dataset,init_theta,lr);
         cost2=regression::cost_function(dataset,init_theta);
-         std::cout<<i+1<<"->"<<"cost:  "<<std::setprecision(5)<<cost2;
-         std::cout<<"   -reduced cost: "<<std::setprecision(5)<<cost1-cost2<<std::endl;
+         std::cout<<i+1<<"->"<<"cost:  "<<cost2;
+         std::cout<<"   -reduced cost: "<<cost1-cost2<<std::endl;
          cost1=cost2;
         }
         return init_theta;

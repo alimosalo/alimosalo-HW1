@@ -4,19 +4,22 @@
 #include <vector>
 #include "regression.h"
 #include "book_inventory.h"
-#include "gtest/gtest.h"
+
 
 
 
 int main(void)
 {
- Books shoppinglist{};
-Books a=book::read_database("inventory.txt");
-std::string b=book::search(a,"Harry Potter and the Half-Blood Prince");
-bool t=book::order(a,shoppinglist,b);
-book::get_recipt(shoppinglist);
 
+Books t{book::read_database("inventory.txt")};
+Books neww{};
+std::cout<<t[20].title<<std::endl;
+std::string a{book::search(t,"Hatchet Jobs: Writings on Contemporary Fiction")};
+std::cout<<a<<std::endl;
+std::cout<<t[20].count<<std::endl;
 
-int h {1234};
-std::cout<<std::size(h)<<std::endl;
+book::order(t,neww,a);
+std::cout<<t[20].count<<std::endl;
+std::cout<<neww[0].count<<std::endl;
+
 }
